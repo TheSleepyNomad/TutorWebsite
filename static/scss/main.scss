@@ -1,17 +1,174 @@
 // GLOBAL SETTINGS
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+nav,
+footer,
+header,
+aside {
+    display: block;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    font-size: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+input,
+button,
+textarea {
+    font-family: inherit;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: 400;
+}
+
 .title {
     font-size: 36px;
     line-height: 60px;
     font-weight: 700;
 }
+
 .subtitle {
     font-size: 16px;
     line-height: 25px;
     font-weight: 400;
     letter-spacing: 0.6px;
 }
+
 .text {
     font-size: 14px;
     line-height: 22px;
     word-spacing: 0.7px;
 }
+// =============================================================
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+._conteiner {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.main-menu {
+    background-color: #000;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: fixed;
+    z-index: 10000;
+    transition: 0.3s;
+}
+.menu {
+    display: flex;
+    &__item {
+        color: #bfbab0;
+        display: inline-block;
+        padding-right: 15px;
+        padding-left: 15px;
+        font-size: 15px;
+    }
+}
+.content {
+    flex: 1 0 auto;
+}
+.footer {
+    flex: 0 0 auto;
+    background-color: #1c2430;
+    padding: 80px 0 80px 0;
+
+    &__content {
+        color: #fff;
+        opacity: 0.5;
+    }
+
+    &__menu {
+        &_items {
+        }
+
+        &_media {
+        }
+    }
+
+    &__info {
+        padding-top: 35px;
+        margin-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__text {
+        max-width: 40%;
+    }
+
+    &__tel-number {
+    }
+}
+@media (min-width: 768px) {
+    ._conteiner {
+        width: 750px;
+    }
+}
+@media (min-width: 992px) {
+    ._conteiner {
+        width: 970px;
+    }
+}
+@media (min-width: 1200px) {
+    ._conteiner {
+        width: 1170px;
+    }
+}
+
+
