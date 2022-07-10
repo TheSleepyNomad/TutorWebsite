@@ -1,3 +1,18 @@
-h3 {
-  color: red;
+.title {
+  font-size: 36px;
+  line-height: 60px;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 16px;
+  line-height: 25px;
+  font-weight: 400;
+  letter-spacing: 0.6px;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 22px;
+  word-spacing: 0.7px;
 }
