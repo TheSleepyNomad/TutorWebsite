@@ -1,4 +1,6 @@
-// GLOBAL SETTINGS
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
 * {
     padding: 0;
     margin: 0;
@@ -45,11 +47,13 @@ button::-moz-focus-inner {
 
 a,
 a:visited {
+    color: #e03a3c;
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: none;
+    color: #e76668;
 }
 
 ul li {
@@ -68,25 +72,7 @@ h5,
 h6 {
     font-size: inherit;
     font-weight: 400;
-}
-
-.title {
-    font-size: 36px;
-    line-height: 60px;
-    font-weight: 700;
-}
-
-.subtitle {
-    font-size: 16px;
-    line-height: 25px;
-    font-weight: 400;
-    letter-spacing: 0.6px;
-}
-
-.text {
-    font-size: 14px;
-    line-height: 22px;
-    word-spacing: 0.7px;
+    font-family: "Raleway", sans-serif;
 }
 // =============================================================
 .wrapper {
