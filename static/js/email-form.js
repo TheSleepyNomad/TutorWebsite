@@ -3,10 +3,12 @@ console.log(emailForm)
 
 function handleSubmit(emailForm) {
     emailForm.addEventListener("submit", e => {
+        // Отключаем обновление страницы
         e.preventDefault();
-        console.log(emailForm)
+        // Добавляем анимацию загрузки
+        emailForm.querySelector('.loading').classList.add('d-block')
+        // Собираем данные с формы
         formData = new FormData(emailForm);
-        console.log(formData);
         fetch('', {
             method: 'POST',
             headers: {
@@ -14,7 +16,16 @@ function handleSubmit(emailForm) {
             },
             body: formData,
         })
-            .then(response => response.json());
+            .then(response => {
+                if (response.ok) {
+                    console.log(response);
+                }
+            })
+            .then(data => {
+                emailForm.querySelector('.loading').classList.remove('d-block')
+                emailForm.querySelector('.sent-message').classList.add('d-block')
+                emailForm.reset()
+            });
     })
 }
 
