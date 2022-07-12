@@ -29,7 +29,7 @@ class Article(models.Model):
     entry_image = models.ImageField(upload_to='blogs_banners')
     # Хранит в себе HTML разметку с текстом
     text = models.TextField()
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     tags = models.ManyToManyField(Tag, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
