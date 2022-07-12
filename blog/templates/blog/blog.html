@@ -7,7 +7,7 @@
       <div class="container">
 
         <ol>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="{% url 'index' %}">Home</a></li>
           <li>Blog</li>
         </ol>
         <h2>Blog</h2>
@@ -35,9 +35,9 @@
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog_detail' %}">John Doe</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'blog_detail' %}"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'blog_detail' %}">12 Comments</a></li>
                 </ul>
               </div>
 
@@ -47,7 +47,7 @@
                   Et eveniet enim. Qui velit est ea dolorem doloremque deleniti aperiam unde soluta. Est cum et quod quos aut ut et sit sunt. Voluptate porro consequatur assumenda perferendis dolore.
                 </p>
                 <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
+                  <a href="{% url 'blog_detail' %}">Read More</a>
                 </div>
               </div>
 
@@ -65,9 +65,9 @@
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog_detail' %}">John Doe</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'blog_detail' %}"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'blog_detail' %}">12 Comments</a></li>
                 </ul>
               </div>
 
@@ -77,7 +77,7 @@
                   Ad impedit qui officiis est in non aliquid veniam laborum. Id ipsum qui aut. Sit aliquam et quia molestias laboriosam. Tempora nam odit omnis eum corrupti qui aliquid excepturi molestiae. Facilis et sint quos sed voluptas. Maxime sed tempore enim omnis non alias odio quos distinctio.
                 </p>
                 <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
+                  <a href="{% url 'blog_detail' %}">Read More</a>
                 </div>
               </div>
 
@@ -95,9 +95,9 @@
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog_detail' %}">John Doe</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'blog_detail' %}"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'blog_detail' %}">12 Comments</a></li>
                 </ul>
               </div>
 
@@ -107,7 +107,7 @@
                   Doloremque est saepe laborum aut. Ipsa cupiditate ex harum at recusandae nesciunt. Ut dolores velit.
                 </p>
                 <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
+                  <a href="{% url 'blog_detail' %}">Read More</a>
                 </div>
               </div>
 
@@ -125,9 +125,9 @@
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog_detail' %}">John Doe</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'blog_detail' %}"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'blog_detail' %}">12 Comments</a></li>
                 </ul>
               </div>
 
@@ -137,7 +137,7 @@
                   Quia sed sunt. Ea asperiores expedita et et delectus voluptates rerum. Id saepe ut itaque quod qui voluptas nobis porro rerum. Quam quia nesciunt qui aut est non omnis. Inventore occaecati et quaerat magni itaque nam voluptas. Voluptatem ducimus sint id earum ut nesciunt sed corrupti nemo.
                 </p>
                 <div class="read-more">
-                  <a href="blog-single.html">Read More</a>
+                  <a href="{% url 'blog_detail' %}">Read More</a>
                 </div>
               </div>
 
@@ -181,31 +181,31 @@
               <div class="sidebar-item recent-posts">
                 <div class="post-item clearfix">
                   <img src="assets/img/blog/blog-recent-1.jpg" alt="">
-                  <h4><a href="blog-single.html">Nihil blanditiis at in nihil autem</a></h4>
+                  <h4><a href="{% url 'blog_detail' %}">Nihil blanditiis at in nihil autem</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
 
                 <div class="post-item clearfix">
                   <img src="assets/img/blog/blog-recent-2.jpg" alt="">
-                  <h4><a href="blog-single.html">Quidem autem et impedit</a></h4>
+                  <h4><a href="{% url 'blog_detail' %}">Quidem autem et impedit</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
 
                 <div class="post-item clearfix">
                   <img src="assets/img/blog/blog-recent-3.jpg" alt="">
-                  <h4><a href="blog-single.html">Id quia et et ut maxime similique occaecati ut</a></h4>
+                  <h4><a href="{% url 'blog_detail' %}">Id quia et et ut maxime similique occaecati ut</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
 
                 <div class="post-item clearfix">
                   <img src="assets/img/blog/blog-recent-4.jpg" alt="">
-                  <h4><a href="blog-single.html">Laborum corporis quo dara net para</a></h4>
+                  <h4><a href="{% url 'blog_detail' %}">Laborum corporis quo dara net para</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
 
                 <div class="post-item clearfix">
                   <img src="assets/img/blog/blog-recent-5.jpg" alt="">
-                  <h4><a href="blog-single.html">Et dolores corrupti quae illo quod dolor</a></h4>
+                  <h4><a href="b{% url 'blog_detail' %}">Et dolores corrupti quae illo quod dolor</a></h4>
                   <time datetime="2020-01-01">Jan 1, 2020</time>
                 </div>
 
