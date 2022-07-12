@@ -14,6 +14,11 @@ def is_fetch(request):
 
 
 def index(request):
+    """
+    Отвечает за рендер главной страницы - landing page
+    """
+
+    # обработка формы контактной связи
     if is_fetch(request):
         # !Todo проверить работу почты на хостинге
         # Отправка почты
@@ -27,10 +32,11 @@ def index(request):
 
         except Exception:
             pass
+            return JsonResponse({'status':'500', 'ok': False})
 
         finally:
 
-        #? Для разработки клиентской части будем симулировать успешную отправку
-            return JsonResponse({'status':'200'})
-            
+            #? Для разработки клиентской части будем симулировать успешную отправку
+            return JsonResponse({'status':'200', 'ok': True})
+
     return render(request, 'landingpage/index.html')
