@@ -6,5 +6,5 @@ from .views import index
 app_name = 'landingpage'
 
 urlpatterns = [
-    path('', include('landingpage.urls'))
+    path('', index, name='index'),
 ]

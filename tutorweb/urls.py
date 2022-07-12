@@ -20,6 +20,6 @@ from landingpage.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
+    path('', include('landingpage.urls')),
     path('blogs/', include('blog.urls')),
 ]
