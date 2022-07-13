@@ -16,7 +16,48 @@
 
       </div>
     </section><!-- End Breadcrumbs -->
-
+    <section class="blog__tools">
+        <div class="container" data-aos="fade-down">
+            <div class="row">
+                <div class="col-lg-8 entries">
+                    <form action="" method="POST" class="php-email-form" id="blog-form" encType='multipart/form-data'>
+                        {% csrf_token %}
+                    <div class="col form-group mb-3">
+                      <input type="text" name="title" class="form-control" id="title" placeholder="title" required>
+                    </div>
+                    <div class="col form-group mb-3">
+                        <input type="file" name="entry-img" class="form-control" id="entry-img" placeholder="entry-img" required>
+                    </div>
+                    <div class="col form-group mb-3">
+                        <select name='category' class="form-control">
+                            <option selected>Select category</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="col form-group mb-3">
+                        <select name='tag' class="form-control" multiple>
+                            <option value="1">Tag1</option>
+                            <option value="2">Tag2</option>
+                            <option value="3">Tag3</option>
+                        </select>
+                    </div>
+                      <div class="my-3" id="last_el_blog_form">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your message has been sent. Thank you!</div>
+                      </div>
+                      <div class="text-center"><button type="submit">Создать пост</button></div>
+                    </form>
+                    <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_text">Добавить текст</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_quote">Добавить цитату</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_header">Добавить заголовок</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_img">Добавить картинку</button>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- ======= Blog Section ======= -->
     <section id="blog" class="blog">
       <div class="container" data-aos="fade-up">
@@ -242,4 +283,6 @@
   </main>
 {% endblock content %}
 
- 
+{% block js %}
+<script src="{% static 'js/add_blog.js' %}"></script>
+{% endblock js %}
