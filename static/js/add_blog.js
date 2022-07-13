@@ -1,6 +1,8 @@
+// * @TheSleepyNomad
+// ? Скрипт для формы(CMS) написания статьи
+
 // Форма
 const addBlogForm = document.querySelector("#blog-form")
-
 
 // Кнопки
 const addHeaderBtn = document.querySelector("#blog_form_add_header")
@@ -8,13 +10,12 @@ const addTextBtn = document.querySelector("#blog_form_add_text")
 const addQuoteBtn = document.querySelector("#blog_form_add_quote")
 const addImgBtn = document.querySelector("#blog_form_add_img")
 const lastElForm = document.querySelector("#last_el_blog_form")
-// Шаблоны
-let textTemplate = `<div class="form-group"><textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea></div>`
-let imgTemplate = `<div class="col form-group"><input type="file" name="entry-img" class="form-control" id="entry-img" placeholder="entry-img"></div>`
-let quoteTemplate = `<blockquote><p>Et vero doloremque tempore voluptatem ratione vel aut. Deleniti sunt animi aut. Aut eos aliquam doloribus minus autem quos.</p></blockquote>`
+
 
 clickCount = 1
 
+// Обработчики кнопок
+// При нажатии добавляет новое поле для ввода на форму
 function handleHeaderBtn(btn, lastElForm, clickCount) {
     btn.addEventListener('click', e => {
         e.preventDefault()
@@ -63,23 +64,25 @@ function handleImgBtn(btn, lastElForm, clickCount) {
     })
 }
 
+
 handleHeaderBtn(addHeaderBtn, lastElForm, clickCount)
 handleTextBtn(addTextBtn, lastElForm, clickCount)
 handleQuoteBtn(addQuoteBtn, lastElForm, clickCount)
 handleImgBtn(addImgBtn, lastElForm, clickCount)
 
+
+// Обработчик для формы
 function handleSubmit(addBlogForm) {
     addBlogForm.addEventListener("submit", e => {
         // Отключаем обновление страницы
         e.preventDefault();
-        let entry_img = document.querySelector("#entry-img")
         // Добавляем анимацию загрузки
         addBlogForm.querySelector('.loading').classList.add('d-block')
         // Собираем данные с формы
+        let allSecondObj = document.querySelectorAll('.secObj'); // Получаем все элементы, которые добавил пользователь
+        let textDataTemplate = [] // С помощью этого массива объединим разметку и создадим html структуру статьи
 
-        let allSecondObj = document.querySelectorAll('.secObj');
-        console.log(allSecondObj);
-        let textDataTemplate = []
+        // Создаем основную разметку статьи
         for (let i of allSecondObj) {
             if (i.id == 'header') {
                 textDataTemplate.push(`<h3>${i.value}</h3>`)
@@ -95,19 +98,10 @@ function handleSubmit(addBlogForm) {
             }
         }
         textData = `<div class="entry-content">${textDataTemplate.join('')}</div>`
+
+        // Формируем пакет данных к отправке
         formData = new FormData(addBlogForm);
         formData.append("text", textData);
-
-
-
-
-
-
-
-
-
-
-        // formData.append('entry_img', entry_img.files[0])
         fetch('', {
             method: 'POST',
             headers: {
