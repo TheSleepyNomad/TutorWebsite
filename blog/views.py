@@ -4,6 +4,7 @@ from .models import Article, Gallery, Tag, Category
 from landingpage.views import is_fetch
 from django.http import JsonResponse
 from datetime import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # * @TheSleepyNomad
@@ -38,10 +39,20 @@ def blog_list(request):
         # Todo не забыть про обработку ошибок и исключений!
         return JsonResponse({'status':'200', 'ok': True})
 
-
+    articles_list = Article.objects.all()
+    paginator = Paginator(articles_list, 1) # Количество постов на странице
+    page = request.GET.get('page')
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+    
     context = {
         # Todo Так как модели связаны - попробовать вытащить все данные одним запросом
-        'articles': Article.objects.all(),
+        'page': page,
+        'articles': articles,
         'tags': Tag.objects.all(),
         'category': Category.objects.all()
     }
