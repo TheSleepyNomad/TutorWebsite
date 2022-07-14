@@ -17,47 +17,52 @@
       </div>
     </section><!-- End Breadcrumbs -->
     <section class="blog__tools">
-        <div class="container" data-aos="fade-down">
+        <div class="container" data-aos="fade-down" >
             <div class="row">
-                <div class="col-lg-8 entries">
-                    <form action="" method="POST" class="php-email-form" id="blog-form" encType='multipart/form-data'>
-                        {% csrf_token %}
-                    <div class="col form-group mb-3">
-                        <label for="title">Заголовок статьи</label>
-                        <input type="text" name="title" class="form-control" id="title" placeholder="title" required>
-                    </div>
-                    <div class="col form-group mb-3">
-                        <label for="entry-img">Главное изображение</label>
-                        <input type="file" name="entry-img" class="form-control" id="entry-img" placeholder="entry-img" required>
-                    </div>
-                    <div class="col form-group mb-3">
-                        <label for="">Категория</label>
-                        <select name='category' class="form-control" required>
-                            <option selected>Select category</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="col form-group mb-3">
-                        <label for="">Tags</label>
-                        <select name='tag' class="form-control" multiple required>
-                            <option value="1">Tag1</option>
-                            <option value="2">Tag2</option>
-                            <option value="3">Tag3</option>
-                        </select>
-                    </div>
-                      <div class="my-3" id="last_el_blog_form">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Your message has been sent. Thank you!</div>
-                      </div>
-                      <div class="text-center"><button type="submit">Создать пост</button></div>
-                    </form>
-                    <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_text">Добавить текст</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_quote">Добавить цитату</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_header">Добавить заголовок</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_img">Добавить картинку</button>
+                <div class="col-lg-8 entries collapse" id="blogFormWrapper">
+                        <form action="" method="POST" class="php-email-form" id="blog-form" encType='multipart/form-data'>
+                            {% csrf_token %}
+                        <div class="col form-group mb-3">
+                            <label for="title">Заголовок статьи</label>
+                            <input type="text" name="title" class="form-control" id="title" placeholder="title" required>
+                        </div>
+                        <div class="col form-group mb-3">
+                            <label for="entry-img">Главное изображение</label>
+                            <input type="file" name="entry-img" class="form-control" id="entry-img" placeholder="entry-img" required>
+                        </div>
+                        <div class="col form-group mb-3">
+                            <label for="">Категория</label>
+                            <select name='category' class="form-control" required>
+                                <option selected>Select category</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="col form-group mb-3">
+                            <label for="">Tags</label>
+                            <select name='tag' class="form-control" multiple required>
+                                <option value="1">Tag1</option>
+                                <option value="2">Tag2</option>
+                                <option value="3">Tag3</option>
+                            </select>
+                        </div>
+                        <div class="my-3" id="last_el_blog_form">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center"><button type="submit">Создать пост</button></div>
+                        </form>
+                        <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_text">Добавить текст</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_quote">Добавить цитату</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_header">Добавить заголовок</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_img">Добавить картинку</button>
+                </div>
+                <div class="col-lg-8">
+                    <button type="button" class="btn btn-success" id="addBlog" data-bs-toggle="collapse" data-bs-target="#blogFormWrapper" aria-expanded="false" aria-controls="collapseExample">Создать</button>
+                    <!-- <button type="button" class="btn btn-warning" id="editBlog">Редактировать</button>
+                    <button type="button" class="btn btn-danger">Удалить</button> -->
                 </div>
             </div>
         </div>

@@ -1,6 +1,12 @@
 // * @TheSleepyNomad
 // ? Скрипт для формы(CMS) написания статьи
 
+const addBlogBtn = document.querySelector("#addBlog")
+let blogFormWrapper = document.querySelector('#blogFormWrapper')
+addBlogBtn.addEventListener('click', e => {
+    blogFormWrapper.classList.remove('d-none')
+})
+
 // Форма
 const addBlogForm = document.querySelector("#blog-form")
 
@@ -124,7 +130,7 @@ function handleSubmit(addBlogForm) {
             .then(data => {
                 addBlogForm.querySelector('.loading').classList.remove('d-block')
                 addBlogForm.querySelector('.sent-message').classList.add('d-block')
-                addBlogForm.reset()
+                location.reload()
             });
     })
 }
