@@ -1,7 +1,5 @@
-from turtle import update
-from unicodedata import category
 from django.db import models
-
+from users.models import User
 
 # Create your models here.
 class Category(models.Model):
@@ -41,13 +39,16 @@ class Article(models.Model):
     def __str__(self) -> str:
         return f'Статья - {self.title}'
 
+class Comment(models.Model):
+    article = models.ForeignKey(Article, related_name='comments')
+    user = models.ForeignKey(User, related_name='comments')
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True) # Для отключения комментария
 
-# class Comment(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     post = models.ForeignKey(Article, on_delete=models.CASCADE)
-#     text = models.TextField()
-#     created = models.DateTimeField(default=timezone.now, null=True)
-#     moderation = models.BooleanField(default=False)
+    class Meta:
+        ordering = ('created',)
 
-#     def __str__(self):
-#         return self.text
+    def __str__(self):
+        return f'Comment by {self.user} on {self.article}'
