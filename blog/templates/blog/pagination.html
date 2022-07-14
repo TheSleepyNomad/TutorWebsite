@@ -1,25 +1,33 @@
+
+<!-- ? Шаблон для пагинатора -->
+<!-- Проверяем есть ли еще страницы. Если нет, то не рендерим разметку -->
 {% if articles.has_other_pages %}
-            <div class="blog-pagination">
-              <ul class="justify-content-center">
-                <!-- {% if articles.has_previous %}
+    <div class="blog-pagination">
+        <ul class="justify-content-center">
+
+            <!-- ? На случай изменения дизайна пагинатора. Для добавления стрелочек -->
+            <!-- {% if articles.has_previous %}
                     <li><a href="?page={{ articles.previous_page_number }}">{{ articles.previous_page_number }}</a></li>
-                {% else %}
-                <li><a href="#"><</a></li>
-                {% endif %} -->
-                {% for i in articles.paginator.page_range %}
-                    {% if i > articles.number|add:-4 and i < articles.number|add:4 %}
-                        {% if articles.number == i %}
-                            <li class="active"><a href="#">{{ i }}</a></li>
-                        {% else %}
-                            <li><a href="?page={{ i }}">{{ i }}</a></li>
-                        {% endif %}
+                    {% else %}
+                    <li><a href="#"><</a></li>
+                    {% endif %} -->
+
+            {% for i in articles.paginator.page_range %}
+                {% if i > articles.number|add:-4 and i < articles.number|add:4 %}
+                    {% if articles.number == i %}
+                        <li class="active"><a href="#">{{ i }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
                     {% endif %}
-                {% endfor %}
-                <!-- {% if articles.has_next %}
+                {% endif %}
+            {% endfor %}
+
+            <!-- ? На случай изменения дизайна пагинатора. Для добавления стрелочек -->
+            <!-- {% if articles.has_next %}
                     <li><a href="?page={{ articles.next_page_number }}">{{ articles.next_page_number }}</a></li>
-                {% else %}
+                    {% else %}
                     <li><a href="#">{{ articles.previous_page_number }}</a></li>
-                {% endif %} -->
-              </ul>
-            </div>
-            {% endif %}
+                    {% endif %} -->
+        </ul>
+    </div>
+{% endif %}

@@ -2,166 +2,181 @@
 {% load static %}
 
 {% block content %}
-  <main id="main">
+    <main id="main">
+        <!-- Breadcrumbs -->
+        <section class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a href="{% url 'landingpage:index' %}">Home</a></li>
+                    <li>Статьи</li>
+                </ol>
+                <h2>Все статьи</h2>
+            </div>
+        </section>
+        <!-- End Breadcrumbs -->
 
-    <!-- ======= Breadcrumbs ======= -->
-    <section class="breadcrumbs">
-      <div class="container">
-
-        <ol>
-          <li><a href="{% url 'landingpage:index' %}">Home</a></li>
-          <li>Статьи</li>
-        </ol>
-        <h2>Все статьи</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
-    <section class="blog__tools">
-        <div class="container" data-aos="fade-down" >
-            <div class="row">
-                <div class="col-lg-8 entries collapse" id="blogFormWrapper">
+        <!-- Blog creation form -->
+        <section class="blog__tools">
+            <div class="container" data-aos="fade-down" >
+                <div class="row">
+                    <div class="col-lg-8 entries collapse" id="blogFormWrapper">
                         <form action="" method="POST" class="php-email-form" id="blog-form" encType='multipart/form-data'>
                             {% csrf_token %}
-                        <div class="col form-group mb-3">
-                            <label for="title">Заголовок статьи</label>
-                            <input type="text" name="title" class="form-control" id="title" placeholder="title" required>
-                        </div>
-                        <div class="col form-group mb-3">
-                            <label for="entry-img">Главное изображение</label>
-                            <input type="file" name="entry-img" class="form-control" id="entry-img" placeholder="entry-img" required>
-                        </div>
-                        <div class="col form-group mb-3">
-                            <label for="">Категория</label>
-                            <select name='category' class="form-control" required>
-                                <option selected>Select category</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="col form-group mb-3">
-                            <label for="">Tags</label>
-                            <select name='tag' class="form-control" multiple required>
-                                <option value="1">Tag1</option>
-                                <option value="2">Tag2</option>
-                                <option value="3">Tag3</option>
-                            </select>
-                        </div>
-                        <div class="my-3" id="last_el_blog_form">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
-                        </div>
-                        <div class="text-center"><button type="submit">Создать пост</button></div>
+                            <div class="col form-group mb-3">
+                                <label for="title">Заголовок статьи</label>
+                                <input type="text" name="title" class="form-control" id="title" placeholder="title" required>
+                            </div>
+                            <div class="col form-group mb-3">
+                                <label for="entry-img">Главное изображение</label>
+                                <input type="file" name="entry-img" class="form-control" id="entry-img" placeholder="entry-img" required>
+                            </div>
+                            <div class="col form-group mb-3">
+                                <label for="">Категория</label>
+                                <select name='category' class="form-control" required>
+                                    <option selected>Select category</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col form-group mb-3">
+                                <label for="">Tags</label>
+                                <select name='tag' class="form-control" multiple required>
+                                    <option value="1">Tag1</option>
+                                    <option value="2">Tag2</option>
+                                    <option value="3">Tag3</option>
+                                </select>
+                            </div>
+                            <div class="my-3" id="last_el_blog_form">
+                                <div class="loading">Loading</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                            </div>
+                            <div class="text-center"><button type="submit">Создать пост</button></div>
                         </form>
+
+                        <!-- Buttons for blog creating -->
                         <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_text">Добавить текст</button>
                         <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_quote">Добавить цитату</button>
                         <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_header">Добавить заголовок</button>
                         <button type="button" class="btn btn-primary btn-sm" id="blog_form_add_img">Добавить картинку</button>
-                </div>
-                <div class="col-lg-8">
+                        <!-- End Buttons for blog creating -->
+
+                    </div>
+
+                    <!-- Buttons for open blog creation form -->
+                    <div class="col-lg-8">
                     <button type="button" class="btn btn-success" id="addBlog" data-bs-toggle="collapse" data-bs-target="#blogFormWrapper" aria-expanded="false" aria-controls="collapseExample">Создать</button>
+
+                    <!-- ? В работе -->
                     <!-- <button type="button" class="btn btn-warning" id="editBlog">Редактировать</button>
                     <button type="button" class="btn btn-danger">Удалить</button> -->
+                    <!-- End Buttons for open blog creation form -->
+
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- ======= Blog Section ======= -->
-    <section id="blog" class="blog">
-      <div class="container" data-aos="fade-up">
+        </section>
+        <!-- End Blog creation form -->
 
-        <div class="row">
+        <!-- Blog Section -->
+        <section id="blog" class="blog">
+            <div class="container" data-aos="fade-up">
+                <div class="row">
+                    <div class="col-lg-8 entries">
+                        {% for article in articles %}
+                            <article class="entry">
+                                <div class="entry-img">
+                                    <img src="{{ article.entry_image.url }}" alt="" class="img-fluid">
+                                </div>
+                                <h2 class="entry-title">
+                                    <a href="{% url 'blog:blog_detail' article.pk %}">{{ article.title }}</a>
+                                </h2>
+                                <div class="entry-meta">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog:blog_detail' article.pk %}">John Doe</a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'blog:blog_detail' article.pk %}"><time datetime="">{{ article.created_at|date:"M j, Y" }}</time></a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'blog:blog_detail' article.pk %}">12 Comments</a></li>
+                                    </ul>
+                                </div>
+                                <div class="entry-content">
+                                    {{ article.prev_text|safe }}
+                                    <div class="read-more">
+                                        <a href="{% url 'blog:blog_detail' article.pk %}">Читать</a>
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                        {% include 'blog/pagination.html' %}
+                    </div>
 
-          <div class="col-lg-8 entries">
+                    <!-- Sidebar -->
+                    <div class="col-lg-4">
+                        <div class="sidebar">
 
-            {% for article in articles %}
-            <article class="entry">
+                            <!-- Sidebar search formn-->
+                            <h3 class="sidebar-title">Поиск</h3>
+                            <div class="sidebar-item search-form">
+                                <form action="">
+                                    <input type="text">
+                                    <button type="submit"><i class="bi bi-search"></i></button>
+                                </form>
+                            </div>
+                            <!-- End sidebar search formn-->
+                            
+                            <!-- Sidebar categories-->
+                            <h3 class="sidebar-title">Категории</h3>
+                            <div class="sidebar-item categories">
+                                <ul>
+                                    {% for cat in category  %}
+                                        <li><a href="#">{{cat.name}}<span>(25)</span></a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <!-- End sidebar categories-->
 
-              <div class="entry-img">
-                <img src="{{ article.entry_image.url }}" alt="" class="img-fluid">
-              </div>
+                            <!-- Sidebar recent posts-->
+                            {% if articles %}
+                            <h3 class="sidebar-title">Недавние посты</h3>
+                            <div class="sidebar-item recent-posts">
+                                {% for article in articles %}
+                                <div class="post-item clearfix">
+                                    <img src="{{ article.entry_image.url }}" alt="">
+                                    <h4><a href="{% url 'blog:blog_detail' article.pk %}">{{ article.title }}</a></h4>
+                                    <time datetime="">{{ article.created_at|date:"M j, Y" }}</time>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <!-- End sidebar recent posts-->
+                            {% endif %}
 
-              <h2 class="entry-title">
-                <a href="{% url 'blog:blog_detail' article.pk %}">{{ article.title }}</a>
-              </h2>
+                            <!-- Sidebar tags-->
+                            {% if tags %}
+                            <h3 class="sidebar-title">Tags</h3>
+                            <div class="sidebar-item tags">
+                                <ul>
+                                    {% for tag in tags  %}
+                                    <li><a href="#">{{ tag.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                            <!-- End sidebar tags-->
 
-              <div class="entry-meta">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog:blog_detail' article.pk %}">John Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'blog:blog_detail' article.pk %}"><time datetime="">{{ article.created_at|date:"M j, Y" }}</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'blog:blog_detail' article.pk %}">12 Comments</a></li>
-                </ul>
-              </div>
-              <div class="entry-content">
-                {{ article.prev_text|safe }}
-                <div class="read-more">
-                  <a href="{% url 'blog:blog_detail' article.pk %}">Читать</a>
+                        </div>
+                        <!-- End sidebar -->
+
+                    </div>
+                    <!-- End blog sidebar -->
+
                 </div>
-              </div>
-            </article>
-            {% endfor %}
-            {% include 'blog/pagination.html' %}
-          </div><!-- End blog entries list -->
+            </div>
+        </section>
+        <!-- End Blog Section -->
 
-          <div class="col-lg-4">
-
-            <div class="sidebar">
-
-              <h3 class="sidebar-title">Поиск</h3>
-              <div class="sidebar-item search-form">
-                <form action="">
-                  <input type="text">
-                  <button type="submit"><i class="bi bi-search"></i></button>
-                </form>
-              </div><!-- End sidebar search formn-->
-
-              <h3 class="sidebar-title">Категории</h3>
-              <div class="sidebar-item categories">
-                <ul>
-                    {% for cat in category  %}
-                  <li><a href="#">{{cat.name}}<span>(25)</span></a></li>
-                    {% endfor %}
-                </ul>
-              </div><!-- End sidebar categories-->
-              {% if articles %}
-              <h3 class="sidebar-title">Недавние посты</h3>
-              <div class="sidebar-item recent-posts">
-                {% for article in articles %}
-                <div class="post-item clearfix">
-                  <img src="{{ article.entry_image.url }}" alt="">
-                  <h4><a href="{% url 'blog:blog_detail' article.pk %}">{{ article.title }}</a></h4>
-                  <time datetime="">{{ article.created_at|date:"M j, Y" }}</time>
-                </div>
-                {% endfor %}
-              </div>
-              <!-- End sidebar recent posts-->
-              {% endif %}
-
-              {% if tags %}
-              <h3 class="sidebar-title">Tags</h3>
-              <div class="sidebar-item tags">
-                <ul>
-                    {% for tag in tags  %}
-                    <li><a href="#">{{ tag.name }}</a></li>
-                    {% endfor %}
-                </ul>
-              </div>
-              <!-- End sidebar tags-->
-              {% endif %}
-
-            </div><!-- End sidebar -->
-
-          </div><!-- End blog sidebar -->
-
-        </div>
-
-      </div>
-    </section><!-- End Blog Section -->
-
-  </main>
+    </main>
 {% endblock content %}
 
 {% block js %}
-<script defer src="{% static 'js/add_blog.js' %}"></script>
+    <script defer src="{% static 'js/add_blog.js' %}"></script>
 {% endblock js %}
