@@ -26,6 +26,7 @@ class Gallery(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=70, verbose_name='Заголовок')
+    prev_text = models.TextField()
     entry_image = models.ImageField(upload_to='images/banners')
     text = models.TextField() # Хранит в себе HTML разметку с текстом
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)

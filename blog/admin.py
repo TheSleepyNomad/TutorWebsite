@@ -4,7 +4,7 @@ from .models import Article, Category, Tag, Gallery
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'entry_image', 'text', 'category', 'created_at', 'updated_at')
+    list_display = ('title', 'prev_text', 'entry_image', 'text', 'category', 'created_at', 'updated_at')
 
 
 @admin.register(Category)

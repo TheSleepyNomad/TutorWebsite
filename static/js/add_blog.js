@@ -83,12 +83,18 @@ function handleSubmit(addBlogForm) {
         let textDataTemplate = [] // С помощью этого массива объединим разметку и создадим html структуру статьи
 
         // Создаем основную разметку статьи
+        let pCount = 1;
+        let prevText = ''
         for (let i of allSecondObj) {
             if (i.id == 'header') {
                 textDataTemplate.push(`<h3>${i.value}</h3>`)
             }
             if (i.id == 'text') {
                 textDataTemplate.push(`<p>${i.value}</p>`)
+                if (pCount == 1) {
+                    pCount++
+                    prevText = `<p>${i.value}</p>`
+                }
             }
             if (i.id == 'quote') {
                 textDataTemplate.push(`<blockquote><p>${i.value}</p></blockquote>`)
@@ -98,10 +104,11 @@ function handleSubmit(addBlogForm) {
             }
         }
         textData = `<div class="entry-content">${textDataTemplate.join('')}</div>`
-
         // Формируем пакет данных к отправке
         formData = new FormData(addBlogForm);
         formData.append("text", textData);
+        formData.append("prev_text", prevText);
+
         fetch('', {
             method: 'POST',
             headers: {

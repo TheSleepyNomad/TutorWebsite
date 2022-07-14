@@ -15,6 +15,7 @@ def blog_list(request):
     # Обработка запросов от формы добавления статей
     if is_fetch(request):
         # Если запросе есть файлы кроме главного баннера, то эти файлы идут в галлерею 
+        print(request.POST)
         if len(request.FILES) > 1:
             for img in range(1, len(request.FILES)):
                 image = request.FILES.get(f'gallary{img}')
@@ -24,6 +25,7 @@ def blog_list(request):
 
         article = Article(
             title=request.POST.get('title'),
+            prev_text=request.POST.get('prev_text'),
             entry_image=request.FILES.get('entry-img'),
             text=request.POST.get('text'), # Хранит в себе html разметку, которая генирируется на стороне клиента
             category=Category.objects.get(pk=request.POST.get('category')), # Todo Почитать документацию Django, возможно можно реализовать менее затратно
@@ -35,6 +37,11 @@ def blog_list(request):
 
         # Todo не забыть про обработку ошибок и исключений!
         return JsonResponse({'status':'200', 'ok': True})
+
+
+        # context = {
+        #     articles = Article.objects.a
+        # }
     return render(request,'blog/blog.html')
 
 
