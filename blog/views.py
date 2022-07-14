@@ -39,10 +39,13 @@ def blog_list(request):
         return JsonResponse({'status':'200', 'ok': True})
 
 
-        # context = {
-        #     articles = Article.objects.a
-        # }
-    return render(request,'blog/blog.html')
+    context = {
+        # Todo Так как модели связаны - попробовать вытащить все данные одним запросом
+        'articles': Article.objects.all(),
+        'tags': Tag.objects.all(),
+        'category': Category.objects.all()
+    }
+    return render(request,'blog/blog.html', context=context)
 
 
 def blog_detail(request, pk):
