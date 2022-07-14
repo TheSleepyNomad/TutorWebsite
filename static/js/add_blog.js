@@ -19,7 +19,7 @@ clickCount = 1
 function handleHeaderBtn(btn, lastElForm, clickCount) {
     btn.addEventListener('click', e => {
         e.preventDefault()
-        let headerTemplate = `<div class="col form-group mb-3"><input type="text" name="header${clickCount}" class="form-control secObj" id="header" placeholder="title"></div>`
+        let headerTemplate = `<div class="col form-group mb-3"><label for="">Добавить заголовок</label><input type="text" name="header${clickCount}" class="form-control secObj" id="header" placeholder="title"></div>`
         lastElForm.insertAdjacentHTML('beforebegin', headerTemplate)
         clickCount++
 
@@ -31,7 +31,7 @@ function handleHeaderBtn(btn, lastElForm, clickCount) {
 function handleTextBtn(btn, lastElForm, clickCount) {
     btn.addEventListener('click', e => {
         e.preventDefault()
-        let textTemplate = `<div class="form-group mb-3"><textarea class="form-control secObj" name="text${clickCount}" rows="5" placeholder="Message" id="text"></textarea></div>`
+        let textTemplate = `<div class="form-group mb-3"><label for="">Добавить текст</label><textarea class="form-control secObj" name="text${clickCount}" rows="5" placeholder="Message" id="text"></textarea></div>`
         lastElForm.insertAdjacentHTML('beforebegin', textTemplate)
         clickCount++
 
@@ -43,7 +43,7 @@ function handleTextBtn(btn, lastElForm, clickCount) {
 function handleQuoteBtn(btn, lastElForm, clickCount) {
     btn.addEventListener('click', e => {
         e.preventDefault()
-        let quoteTemplate = `<div class="form-group mb-3"><textarea class="form-control secObj" name="quote${clickCount}" rows="5" placeholder="Message" id="quote"></textarea></div>`
+        let quoteTemplate = `<div class="form-group mb-3"><label for="">Добавить цитату</label><textarea class="form-control secObj" name="quote${clickCount}" rows="5" placeholder="Message" id="quote"></textarea></div>`
         lastElForm.insertAdjacentHTML('beforebegin', quoteTemplate)
         clickCount++
 
@@ -55,7 +55,7 @@ function handleQuoteBtn(btn, lastElForm, clickCount) {
 function handleImgBtn(btn, lastElForm, clickCount) {
     btn.addEventListener('click', e => {
         e.preventDefault()
-        let imgTemplate = `<div class="col form-group mb-3"><input type="file" name="gallary${clickCount}" class="form-control secObj" id="img" placeholder="entry-img"></div>`
+        let imgTemplate = `<div class="col form-group mb-3"><label for="">Добавить изображение</label><input type="file" name="gallary${clickCount}" class="form-control secObj" id="img" placeholder="entry-img"></div>`
         lastElForm.insertAdjacentHTML('beforebegin', imgTemplate)
         clickCount++
         console.log(clickCount);

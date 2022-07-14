@@ -411,7 +411,7 @@ section {
   top: 60px;
   left: 0;
   right: 0;
-  transform: skewY(-3deg);
+  /* transform: skewY(-3deg); */
 }
 
 /*--------------------------------------------------------------

@@ -23,13 +23,16 @@
                     <form action="" method="POST" class="php-email-form" id="blog-form" encType='multipart/form-data'>
                         {% csrf_token %}
                     <div class="col form-group mb-3">
-                      <input type="text" name="title" class="form-control" id="title" placeholder="title" required>
+                        <label for="title">Заголовок статьи</label>
+                        <input type="text" name="title" class="form-control" id="title" placeholder="title" required>
                     </div>
                     <div class="col form-group mb-3">
+                        <label for="entry-img">Главное изображение</label>
                         <input type="file" name="entry-img" class="form-control" id="entry-img" placeholder="entry-img" required>
                     </div>
                     <div class="col form-group mb-3">
-                        <select name='category' class="form-control">
+                        <label for="">Категория</label>
+                        <select name='category' class="form-control" required>
                             <option selected>Select category</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
@@ -37,7 +40,8 @@
                         </select>
                     </div>
                     <div class="col form-group mb-3">
-                        <select name='tag' class="form-control" multiple>
+                        <label for="">Tags</label>
+                        <select name='tag' class="form-control" multiple required>
                             <option value="1">Tag1</option>
                             <option value="2">Tag2</option>
                             <option value="3">Tag3</option>
@@ -137,7 +141,7 @@
               </div>
               <!-- End sidebar recent posts-->
               {% endif %}
-              
+
               {% if tags %}
               <h3 class="sidebar-title">Tags</h3>
               <div class="sidebar-item tags">
