@@ -33,18 +33,19 @@
                             <div class="col form-group mb-3">
                                 <label for="">Категория</label>
                                 <select name='category' class="form-control" required>
-                                    <option selected>Select category</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option selected>Катергория для статьи</option>
+                                    {% for cat in category  %}
+                                    <option value="{{cat.0}}">{{cat.1}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="col form-group mb-3">
                                 <label for="">Tags</label>
                                 <select name='tag' class="form-control" multiple required>
-                                    <option value="1">Tag1</option>
-                                    <option value="2">Tag2</option>
-                                    <option value="3">Tag3</option>
+                                    {% for tag in tags  %}
+                                    <option value="{{tag.0}}">{{tag.1}}</option>
+                                    {% endfor %}
+                                    
                                 </select>
                             </div>
                             <div class="my-3" id="last_el_blog_form">
@@ -87,7 +88,7 @@
                         {% for article in articles %}
                             <article class="entry">
                                 <div class="entry-img">
-                                    <img src="{{ article.entry_image.url }}" alt="" class="img-fluid">
+                                    <img src="{{ article.entry_image.url }}" alt="" class="img-fluid rounded-md">
                                 </div>
                                 <h2 class="entry-title">
                                     <a href="{% url 'blog:blog_detail' article.pk %}">{{ article.title }}</a>
@@ -129,7 +130,7 @@
                             <div class="sidebar-item categories">
                                 <ul>
                                     {% for cat in category  %}
-                                        <li><a href="?category={{ cat.0 }}">{{ cat.0 }}<span>(25)</span></a></li>
+                                        <li><a href="?category={{ cat.0 }}">{{ cat.1 }}<span>({{ cat.2 }})</span></a></li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -156,7 +157,7 @@
                             <div class="sidebar-item tags">
                                 <ul>
                                     {% for tag in tags  %}
-                                    <li><a href="#">{{ tag.0 }}</a></li>
+                                    <li><a href="#">{{ tag.1 }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </div>

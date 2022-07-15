@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-
+from django.db.models import Count
 
 # ? Рендер страницы с статьями, обработка CMS формы для добавления статей + сортировка и поиск
 # Todo Переписать на cbv перед деплоем
@@ -68,12 +68,11 @@ def blog_list(request):
         articles = paginator.page(paginator.num_pages)
     
     context = {
-        # Todo Так как модели связаны - попробовать вытащить все данные одним запросом
         'page': page,
         'articles': articles,
-        'tags': Tag.objects.all().values_list('name'),
-        'category': Category.objects.all().values_list('name'),
-    }
+        'tags': Tag.objects.all().values_list('id', 'name'),
+        'category': Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
+        }
     return render(request,'blog/blog.html', context=context)
 
 

@@ -1834,3 +1834,9 @@ section {
     padding: 15px;
     font-weight: 600;
 }
+.rounded-md{
+    border-radius: 0.375rem;
+}
+.padding-img{
+    margin-bottom: 8px;
+}

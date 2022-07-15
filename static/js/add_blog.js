@@ -106,7 +106,7 @@ function handleSubmit(addBlogForm) {
                 textDataTemplate.push(`<blockquote><p>${i.value}</p></blockquote>`)
             }
             if (i.id == 'img') {
-                textDataTemplate.push(`<img src="/media/images/${i.files[0].name}" class="img-fluid" alt="">`)
+                textDataTemplate.push(`<img src="/media/images/${i.files[0].name}" class="img-fluid rounded padding-img" alt="">`)
             }
         }
         textData = `<div class="entry-content">${textDataTemplate.join('')}</div>`
