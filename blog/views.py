@@ -41,6 +41,7 @@ def blog_list(request):
     # Обработка поискового запроса
     search_article = request.GET.get('search')
     category_article = request.GET.get('category')
+    tag_article = request.GET.get('tag')
     # Поиск через форму поиска
     if search_article:
         articles_list = Article.objects.filter(\
@@ -48,6 +49,12 @@ def blog_list(request):
             | Q(prev_text__icontains=search_article)\
             | Q(prev_text__icontains=search_article.title())\
             | Q(title__icontains=search_article.title()))\
+            .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
+    # Поиск по тэгу
+    if tag_article:
+        articles_list = Article.objects.filter(\
+            Q(tags__name=tag_article)\
+            | Q(tags__name=tag_article.title()))\
             .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
     # Поиск по категориями
     if category_article:
