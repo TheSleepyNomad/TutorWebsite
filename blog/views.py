@@ -15,7 +15,7 @@ def blog_list(request):
     # Обработка запросов от формы добавления статей
     if is_fetch(request):
         # Если запросе есть файлы кроме главного баннера, то эти файлы идут в галлерею 
-        print(request.POST)
+
         if len(request.FILES) > 1:
             for img in range(1, len(request.FILES)):
                 image = request.FILES.get(f'gallary{img}')
@@ -33,7 +33,7 @@ def blog_list(request):
         article.save()
 
         # ? Из-за отношения ManyToMany пришлось сохранить объект, чтобы появился id и только после этого связать их
-        article.tags.set(Tag.objects.filter(pk__in=request.POST.get('tag')))
+        article.tags.set(Tag.objects.filter(pk__in=request.POST.getlist('tag')))
 
         # Todo не забыть про обработку ошибок и исключений!
         return JsonResponse({'status':'200', 'ok': True})
@@ -77,9 +77,8 @@ def blog_list(request):
 def blog_detail(request, pk):
     
     context = {
-        'article': Article.objects.prefetch_related('tags').get(pk=pk),
+        'article': Article.objects.get(pk=pk),
         'tags': Tag.objects.all().values_list('id', 'name'),
         'category': Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
     }
-    print(context['article'])
     return render(request,'blog/blog_detail.html', context=context)

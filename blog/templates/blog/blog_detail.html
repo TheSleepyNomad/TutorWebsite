@@ -54,7 +54,9 @@
 
                 <i class="bi bi-tags"></i>
                 <ul class="tags">
-                    <li><a href="#">{{ article.tags }}</a></li>
+                    {% for tag in article.tags.all %}
+                    <li><a href="#">{{ tag.name }}</a></li>
+                    {% endfor %}
                 </ul>
               </div>
 
