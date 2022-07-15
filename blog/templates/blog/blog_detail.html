@@ -11,9 +11,9 @@
         <ol>
           <li><a href="{% url 'landingpage:index' %}">Home</a></li>
           <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
-          <li>Blog Single</li>
+          <li>"{{ article.title }}"</li>
         </ol>
-        <h2>Blog Blog</h2>
+        <h2>{{ article.title }}</h2>
 
       </div>
     </section><!-- End Breadcrumbs -->
@@ -49,14 +49,12 @@
               <div class="entry-footer">
                 <i class="bi bi-folder"></i>
                 <ul class="cats">
-                  <li><a href="#">Business</a></li>
+                  <li><a href="#">{{ article.category}}</a></li>
                 </ul>
 
                 <i class="bi bi-tags"></i>
                 <ul class="tags">
-                  <li><a href="#">Creative</a></li>
-                  <li><a href="#">Tips</a></li>
-                  <li><a href="#">Marketing</a></li>
+                    <li><a href="#">{{ article.tags }}</a></li>
                 </ul>
               </div>
 

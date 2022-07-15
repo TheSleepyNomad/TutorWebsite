@@ -1,5 +1,3 @@
-from turtle import title
-from unicodedata import category
 from django.shortcuts import render
 from .models import Article, Gallery, Tag, Category
 from landingpage.views import is_fetch
@@ -50,13 +48,13 @@ def blog_list(request):
             | Q(prev_text__icontains=search_article)\
             | Q(prev_text__icontains=search_article.title())\
             | Q(title__icontains=search_article.title()))\
-            .only('title', 'prev_text', 'entry_image', 'created_at')
+            .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
     # Поиск по категориями
     if category_article:
-        articles_list = Article.objects.filter(category__name=category_article).only('title', 'prev_text', 'entry_image', 'created_at')
+        articles_list = Article.objects.filter(category__name=category_article).only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
     else:
         articles_list = Article.objects.all()\
-            .only('title', 'prev_text', 'entry_image', 'created_at')
+            .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
 
     paginator = Paginator(articles_list, 5) # Количество постов на странице
     page = request.GET.get('page')
@@ -77,5 +75,11 @@ def blog_list(request):
 
 
 def blog_detail(request, pk):
-    article = Article.objects.get(pk=pk)
-    return render(request,'blog/blog_detail.html', context={"article" : article})
+    
+    context = {
+        'article': Article.objects.prefetch_related('tags').get(pk=pk),
+        'tags': Tag.objects.all().values_list('id', 'name'),
+        'category': Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
+    }
+    print(context['article'])
+    return render(request,'blog/blog_detail.html', context=context)
