@@ -1,18 +1,19 @@
 from turtle import title
+from unicodedata import category
 from django.shortcuts import render
 from .models import Article, Gallery, Tag, Category
 from landingpage.views import is_fetch
 from django.http import JsonResponse
 from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 
-# * @TheSleepyNomad
 # ? Рендер страницы с статьями, обработка CMS формы для добавления статей + сортировка и поиск
 # Todo Переписать на cbv перед деплоем
 #   Подумать над реализацией поиска на клиентской части через API
 def blog_list(request):
-
+    print(request.GET)
     # Обработка запросов от формы добавления статей
     if is_fetch(request):
         # Если запросе есть файлы кроме главного баннера, то эти файлы идут в галлерею 
@@ -38,9 +39,26 @@ def blog_list(request):
 
         # Todo не забыть про обработку ошибок и исключений!
         return JsonResponse({'status':'200', 'ok': True})
+    
+    # Обработка поискового запроса
+    search_article = request.GET.get('search')
+    category_article = request.GET.get('category')
+    # Поиск через форму поиска
+    if search_article:
+        articles_list = Article.objects.filter(\
+            Q(title__icontains=search_article)\
+            | Q(prev_text__icontains=search_article)\
+            | Q(prev_text__icontains=search_article.title())\
+            | Q(title__icontains=search_article.title()))\
+            .only('title', 'prev_text', 'entry_image', 'created_at')
+    # Поиск по категориями
+    if category_article:
+        articles_list = Article.objects.filter(category__name=category_article).only('title', 'prev_text', 'entry_image', 'created_at')
+    else:
+        articles_list = Article.objects.all()\
+            .only('title', 'prev_text', 'entry_image', 'created_at')
 
-    articles_list = Article.objects.all()
-    paginator = Paginator(articles_list, 1) # Количество постов на странице
+    paginator = Paginator(articles_list, 5) # Количество постов на странице
     page = request.GET.get('page')
     try:
         articles = paginator.page(page)
@@ -53,8 +71,8 @@ def blog_list(request):
         # Todo Так как модели связаны - попробовать вытащить все данные одним запросом
         'page': page,
         'articles': articles,
-        'tags': Tag.objects.all(),
-        'category': Category.objects.all()
+        'tags': Tag.objects.all().values_list('name'),
+        'category': Category.objects.all().values_list('name'),
     }
     return render(request,'blog/blog.html', context=context)
 
