@@ -6,6 +6,7 @@ from django.db.models import Count
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from landingpage.services import is_fetch
+from datetime import datetime
 
 
 class BlogsListView(ListView):
