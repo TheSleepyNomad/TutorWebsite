@@ -88,7 +88,7 @@
                         {% for article in Articles %}
                             <article class="entry">
                                 <div class="entry-img">
-                                    <img src="{{ article.entry_image.url }}" alt="" class="img-fluid rounded-md">
+                                    <img src="{{ article.entry_image.image.url }}" alt="" class="img-fluid rounded-md">
                                 </div>
                                 <h2 class="entry-title">
                                     <a href="{% url 'blog:blog_detail' article.pk %}">{{ article.title }}</a>

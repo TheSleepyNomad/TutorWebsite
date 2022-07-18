@@ -1,3 +1,4 @@
+from sys import prefix
 from django.shortcuts import render
 from .models import Article, Gallery, Tag, Category
 from django.http import JsonResponse
@@ -21,13 +22,19 @@ class BlogsListView(ListView):
             if len(request.FILES) > 1:
                 for img in range(1, len(request.FILES)):
                     image = request.FILES.get(f'gallary{img}')
-                    time = datetime.now()
-                    gallery = Gallery(title=f'gallery-{time.strftime("%d-%m-%Y %H:%M")}', image=image)
-                    gallery.save()
+                    if Gallery.objects.filter(prefix='other', image='images/' + str(image)).exists():
+                        pass
+                    else:
+                        gallery_image = Gallery.objects.create(prefix='other', image=image)
+                        gallery_image.save()
+            if Gallery.objects.filter(prefix='entery', image='images/' + str(request.FILES.get('entry-img'))).exists():
+                entry_image = Gallery.objects.get(prefix='entery', image='images/' + str(request.FILES.get('entry-img')))
+            else:
+                entry_image = Gallery.objects.create(prefix='entery', image=request.FILES.get('entry-img'))
             article = Article(
             title=request.POST.get('title'),
             prev_text=request.POST.get('prev_text'),
-            entry_image=request.FILES.get('entry-img'),
+            entry_image=entry_image,
             text=request.POST.get('text'), # Хранит в себе html разметку, которая генирируется на стороне клиента
             category=Category.objects.get(pk=request.POST.get('category')), # Todo Почитать документацию Django, возможно можно реализовать менее затратно
             )

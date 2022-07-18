@@ -17,15 +17,15 @@ class Tag(models.Model):
 
 
 class Gallery(models.Model):
-    title = models.CharField(max_length=100, verbose_name='Наименование файла')
+    prefix = models.CharField(max_length=100, verbose_name='Наименование файла')
     image = models.ImageField(upload_to='images')
-    description = models.TextField(verbose_name='Описание изображения', blank=True)
+    # description = models.TextField(verbose_name='Описание изображения', blank=True)
 
 
 class Article(models.Model):
     title = models.CharField(max_length=70, verbose_name='Заголовок')
     prev_text = models.TextField()
-    entry_image = models.ImageField(upload_to='images/banners')
+    entry_image = models.ForeignKey(Gallery, on_delete=models.CASCADE)
     text = models.TextField() # Хранит в себе HTML разметку с текстом
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     tags = models.ManyToManyField(Tag, blank=True)
