@@ -6,7 +6,7 @@ from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.db.models import Count
-
+from landingpage.services import is_fetch
 # ? Рендер страницы с статьями, обработка CMS формы для добавления статей + сортировка и поиск
 # Todo Переписать на cbv перед деплоем
 #   Подумать над реализацией поиска на клиентской части через API
