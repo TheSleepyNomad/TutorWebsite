@@ -50,19 +50,21 @@ def blog_list(request):
             | Q(prev_text__icontains=search_article.title())\
             | Q(title__icontains=search_article.title()))\
             .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
+        print(articles_list)
     # Поиск по тэгу
-    if tag_article:
+    elif tag_article:
         articles_list = Article.objects.filter(\
             Q(tags__name=tag_article)\
             | Q(tags__name=tag_article.title()))\
             .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
     # Поиск по категориями
-    if category_article:
+    elif category_article:
         articles_list = Article.objects.filter(category__name=category_article).only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
     else:
         articles_list = Article.objects.all()\
             .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
 
+    print(articles_list)
     paginator = Paginator(articles_list, 5) # Количество постов на странице
     page = request.GET.get('page')
     try:
@@ -72,12 +74,16 @@ def blog_list(request):
     except EmptyPage:
         articles = paginator.page(paginator.num_pages)
     
+
+    print(articles_list)
     context = {
         'page': page,
         'articles': articles,
         'tags': Tag.objects.all().values_list('id', 'name'),
-        'category': Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
+        'category': Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article')),
+        'recrent_articles': Article.objects.filter(created_at__date__lt=datetime.now()).only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')[:5],
         }
+    print(context['recrent_articles'])
     return render(request,'blog/blog.html', context=context)
 
 
