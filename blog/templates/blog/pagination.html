@@ -1,7 +1,7 @@
 
 <!-- ? Шаблон для пагинатора -->
 <!-- Проверяем есть ли еще страницы. Если нет, то не рендерим разметку -->
-{% if articles.has_other_pages %}
+{% if page_obj.has_other_pages %}
     <div class="blog-pagination">
         <ul class="justify-content-center">
 
@@ -12,9 +12,9 @@
                     <li><a href="#"><</a></li>
                     {% endif %} -->
 
-            {% for i in articles.paginator.page_range %}
-                {% if i > articles.number|add:-4 and i < articles.number|add:4 %}
-                    {% if articles.number == i %}
+            {% for i in page_obj.paginator.page_range %}
+                {% if i > page_obj.number|add:-4 and i < page_obj.number|add:4 %}
+                    {% if page_obj.number == i %}
                         <li class="active"><a href="#">{{ i }}</a></li>
                     {% else %}
                         <li><a href="?page={{ i }}">{{ i }}</a></li>

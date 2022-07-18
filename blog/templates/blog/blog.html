@@ -85,7 +85,7 @@
             <div class="container" data-aos="fade-up">
                 <div class="row">
                     <div class="col-lg-8 entries">
-                        {% for article in articles %}
+                        {% for article in Articles %}
                             <article class="entry">
                                 <div class="entry-img">
                                     <img src="{{ article.entry_image.url }}" alt="" class="img-fluid rounded-md">
@@ -108,7 +108,7 @@
                                 </div>
                             </article>
                         {% endfor %}
-                        {% include 'blog/pagination.html' %}
+                        {% include 'blog/pagination.html' with page=page_obj %}
                     </div>
 
                     <!-- Sidebar -->

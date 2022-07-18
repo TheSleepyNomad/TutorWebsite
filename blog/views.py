@@ -1,91 +1,68 @@
 from django.shortcuts import render
 from .models import Article, Gallery, Tag, Category
-from landingpage.views import is_fetch
 from django.http import JsonResponse
 from datetime import datetime
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.db.models import Count
+from django.views.generic.list import ListView
 from landingpage.services import is_fetch
-# ? Рендер страницы с статьями, обработка CMS формы для добавления статей + сортировка и поиск
-# Todo Переписать на cbv перед деплоем
-#   Подумать над реализацией поиска на клиентской части через API
-def blog_list(request):
-    print(request.GET)
-    # Обработка запросов от формы добавления статей
-    if is_fetch(request):
-        # Если запросе есть файлы кроме главного баннера, то эти файлы идут в галлерею 
 
-        if len(request.FILES) > 1:
-            for img in range(1, len(request.FILES)):
-                image = request.FILES.get(f'gallary{img}')
-                time = datetime.now()
-                gallery = Gallery(title=f'gallery-{time.strftime("%d-%m-%Y %H:%M")}', image=image)
-                gallery.save()
 
-        article = Article(
+class BlogsListView(ListView):
+    model = Article
+    paginate_by = 5
+    queryset = Article.objects.all().only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
+    context_object_name = 'Articles'
+    template_name = 'blog/blog.html'
+
+    def post(self, request, *args, **kwargs):
+        if is_fetch:
+            if len(request.FILES) > 1:
+                for img in range(1, len(request.FILES)):
+                    image = request.FILES.get(f'gallary{img}')
+                    time = datetime.now()
+                    gallery = Gallery(title=f'gallery-{time.strftime("%d-%m-%Y %H:%M")}', image=image)
+                    gallery.save()
+            article = Article(
             title=request.POST.get('title'),
             prev_text=request.POST.get('prev_text'),
             entry_image=request.FILES.get('entry-img'),
             text=request.POST.get('text'), # Хранит в себе html разметку, которая генирируется на стороне клиента
             category=Category.objects.get(pk=request.POST.get('category')), # Todo Почитать документацию Django, возможно можно реализовать менее затратно
-        )
-        article.save()
+            )
+            article.save()
+            article.tags.set(Tag.objects.filter(pk__in=request.POST.getlist('tag')))
+            return JsonResponse({'status':'200', 'ok': True})
+        return self.get(request, *args, **kwargs)
 
-        # ? Из-за отношения ManyToMany пришлось сохранить объект, чтобы появился id и только после этого связать их
-        article.tags.set(Tag.objects.filter(pk__in=request.POST.getlist('tag')))
 
-        # Todo не забыть про обработку ошибок и исключений!
-        return JsonResponse({'status':'200', 'ok': True})
-    
-    # Обработка поискового запроса
-    search_article = request.GET.get('search')
-    category_article = request.GET.get('category')
-    tag_article = request.GET.get('tag')
-    # Поиск через форму поиска
-    if search_article:
-        articles_list = Article.objects.filter(\
-            Q(title__icontains=search_article)\
-            | Q(prev_text__icontains=search_article)\
-            | Q(prev_text__icontains=search_article.title())\
-            | Q(title__icontains=search_article.title()))\
-            .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
-        print(articles_list)
-    # Поиск по тэгу
-    elif tag_article:
-        articles_list = Article.objects.filter(\
-            Q(tags__name=tag_article)\
-            | Q(tags__name=tag_article.title()))\
-            .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
-    # Поиск по категориями
-    elif category_article:
-        articles_list = Article.objects.filter(category__name=category_article).only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
-    else:
-        articles_list = Article.objects.all()\
-            .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
+    def get(self, request, *args, **kwargs):
+        search_article = request.GET.get('search')
+        category_article = request.GET.get('category')
+        tag_article = request.GET.get('tag')
+        if search_article:
+            self.queryset = Article.objects.filter(\
+                Q(title__icontains=search_article)\
+                | Q(prev_text__icontains=search_article)\
+                | Q(prev_text__icontains=search_article.title())\
+                | Q(title__icontains=search_article.title()))\
+                .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
+        if tag_article:
+            self.queryset = Article.objects.filter(\
+                Q(tags__name=tag_article)\
+                | Q(tags__name=tag_article.title()))\
+                .only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
+        if category_article:
+            self.queryset = Article.objects.filter(category__name=category_article).only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
+        return super().get(request, *args, **kwargs)
 
-    print(articles_list)
-    paginator = Paginator(articles_list, 5) # Количество постов на странице
-    page = request.GET.get('page')
-    try:
-        articles = paginator.page(page)
-    except PageNotAnInteger:
-        articles = paginator.page(1)
-    except EmptyPage:
-        articles = paginator.page(paginator.num_pages)
-    
 
-    print(articles_list)
-    context = {
-        'page': page,
-        'articles': articles,
-        'tags': Tag.objects.all().values_list('id', 'name'),
-        'category': Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article')),
-        'recrent_articles': Article.objects.filter(created_at__date__lt=datetime.now()).only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')[:5],
-        }
-    print(context['recrent_articles'])
-    return render(request,'blog/blog.html', context=context)
-
+    def get_context_data(self,*args, **kwargs):
+        context = super(BlogsListView,self).get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all().values_list('id', 'name')
+        context['category'] = Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
+        context['recrent_articles'] = Article.objects.filter(created_at__date__lt=datetime.now()).only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')[:5]
+        return context
 
 def blog_detail(request, pk):
     
