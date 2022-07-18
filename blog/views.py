@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from datetime import datetime
 from django.db.models import Q
 from django.db.models import Count
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from landingpage.services import is_fetch
 
@@ -61,7 +62,7 @@ class BlogsListView(ListView):
         context = super(BlogsListView,self).get_context_data(**kwargs)
         context['tags'] = Tag.objects.all().values_list('id', 'name')
         context['category'] = Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
-        context['recrent_articles'] = Article.objects.filter(created_at__date__lt=datetime.now()).only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')[:5]
+        context['recrent_articles'] = Article.objects.filter(created_at__date__lt=datetime.now()).only('title', 'entry_image', 'created_at').order_by('-id')[:5]
         return context
 
 def blog_detail(request, pk):
@@ -72,3 +73,15 @@ def blog_detail(request, pk):
         'category': Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
     }
     return render(request,'blog/blog_detail.html', context=context)
+
+class BlogDetailView(DetailView):
+    model = Article
+    context_object_name = 'article'
+    template_name = 'blog/blog_detail.html'
+
+    def get_context_data(self,*args, **kwargs):
+        context = super(BlogDetailView,self).get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all().values_list('id', 'name')
+        context['category'] = Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
+        context['recrent_articles'] = Article.objects.filter(created_at__date__lt=datetime.now()).only('title', 'entry_image', 'created_at').order_by('-id')[:5]
+        return context
