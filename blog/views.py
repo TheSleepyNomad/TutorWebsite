@@ -52,6 +52,7 @@ class BlogsListView(ListView):
 
     def get(self, request, *args, **kwargs):
         # Обработка фильтров для статей
+        
         search_article = request.GET.get('search')
         category_article = request.GET.get('category')
         tag_article = request.GET.get('tag')
