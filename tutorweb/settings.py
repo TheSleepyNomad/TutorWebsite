@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'ckeditor',
+    'ckeditor_uploader',
+
     # my apps
     'landingpage',
     'blog',
@@ -130,6 +133,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     Path(BASE_DIR, 'static'),
 ]
+# STATIC_ROOT = Path(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -148,3 +152,6 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 EMAIL_USE_TLS = False
 DEFAULT_FROM_EMAIL = 'iluxaan@mail.ru'
+
+
+CKEDITOR_UPLOAD_PATH = 'images/'
