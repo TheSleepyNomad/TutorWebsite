@@ -1,5 +1,6 @@
+from tkinter import CASCADE
 from django.db import models
-# from users.models import User
+from users.models import Users
 
 # Create your models here.
 class Category(models.Model):
@@ -19,19 +20,21 @@ class Tag(models.Model):
 class Gallery(models.Model):
     prefix = models.CharField(max_length=100, verbose_name='Наименование файла')
     image = models.ImageField(upload_to='images')
-    # description = models.TextField(verbose_name='Описание изображения', blank=True)
+
+    def __str__(self) -> str:
+        return f'Обложка статьи - {self.image}' if self.prefix == 'entry' else f'Картинка в статье - {self.image}'
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=70, verbose_name='Заголовок')
-    prev_text = models.TextField()
-    entry_image = models.ForeignKey(Gallery, on_delete=models.CASCADE)
+    title = models.CharField(max_length=210, verbose_name='Заголовок')
+    prev_text = models.TextField() # Хранит в себе HTML разметку с текстом
+    entry_image = models.ForeignKey(Gallery, on_delete=models.DO_NOTHING)
     text = models.TextField() # Хранит в себе HTML разметку с текстом
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     tags = models.ManyToManyField(Tag, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # created_by = models.ForeignKey()
+    created_by = models.ForeignKey(Users, on_delete=models.CASCADE)
 
     class Meta:
         get_latest_by = "-created_at"
@@ -39,9 +42,10 @@ class Article(models.Model):
     def __str__(self) -> str:
         return f'Статья - {self.title}'
 
+
 class Comment(models.Model):
-    article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    author = models.ForeignKey(Users, on_delete=models.CASCADE)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
