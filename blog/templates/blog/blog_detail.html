@@ -29,7 +29,7 @@
             <article class="entry entry-single">
 
               <div class="entry-img">
-                <img src="{{ article.entry_image.url }}" alt="" class="img-fluid rounded-md">
+                <img src="{{ article.entry_image.image.url }}" alt="" class="img-fluid rounded-md">
               </div>
 
               <h2 class="entry-title">
@@ -40,7 +40,9 @@
                 <ul>
                   <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog:blog_detail' 1 %}">John Doe</a></li>
                   <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'blog:blog_detail' 1 %}"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
+                  {% comment "В разработке" %}
                   <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'blog:blog_detail' 1 %}">12 Comments</a></li>
+                  {% endcomment %}
                 </ul>
               </div>
 
@@ -76,7 +78,7 @@
                 </p>
               </div>
             </div><!-- End blog author bio -->
-
+            {% comment "В разработке" %}
             <div class="blog-comments">
 
               <h4 class="comments-count">8 Comments</h4>
@@ -199,7 +201,7 @@
               </div>
 
             </div><!-- End blog comments -->
-
+            {% endcomment %}
           </div><!-- End blog entries list -->
 
           <div class="col-lg-4">
@@ -257,3 +259,6 @@
 
   </main><!-- End #main -->
 {% endblock content %}
+{% block js %}
+    <script src="{% static 'js/bug_fixes.js' %}"></script>
+{% endblock js %}

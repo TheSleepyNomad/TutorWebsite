@@ -1,6 +1,7 @@
 from tkinter import CASCADE
 from django.db import models
 from users.models import Users
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class Category(models.Model):
@@ -29,7 +30,7 @@ class Article(models.Model):
     title = models.CharField(max_length=210, verbose_name='Заголовок')
     prev_text = models.TextField() # Хранит в себе HTML разметку с текстом
     entry_image = models.ForeignKey(Gallery, on_delete=models.DO_NOTHING)
-    text = models.TextField() # Хранит в себе HTML разметку с текстом
+    text = RichTextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     tags = models.ManyToManyField(Tag, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
