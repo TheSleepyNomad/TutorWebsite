@@ -20,7 +20,7 @@
             <div class="container" data-aos="fade-up">
                 <div class="row">
                     <div class="col-lg-8 entries">
-                        {% for article in Articles %}
+                        {% for article in articles %}
                             <article class="entry">
                                 <div class="entry-img">
                                     <img src="{{ article.entry_image.image.url }}" alt="" class="img-fluid rounded-md">
@@ -77,7 +77,7 @@
                             <div class="sidebar-item recent-posts">
                                 {% for article in recrent_articles %}
                                 <div class="post-item clearfix">
-                                    <img src="{{ article.entry_image.url }}" alt="">
+                                    <img src="{{ article.entry_image.image.url }}" alt="">
                                     <h4><a href="{% url 'blog:blog_detail' article.pk %}">{{ article.title }}</a></h4>
                                     <time datetime="">{{ article.created_at|date:"M j, Y" }}</time>
                                 </div>

@@ -11,9 +11,12 @@ from datetime import datetime
 class BlogsListView(ListView):
     model = Article
     paginate_by = 5
-    queryset = Article.objects.all().only('title', 'prev_text', 'entry_image', 'created_at').order_by('-id')
-    context_object_name = 'Articles'
+    # queryset = Article.objects.all().select_related('entry_image','category').only('title','entry_image__image','text','category__id','category__name').order_by('-id')
+    context_object_name = 'articles'
     template_name = 'blog/blog.html'
+
+    def get_queryset(self):
+        return super(BlogsListView, self).get_queryset().select_related('entry_image',).only('title', 'prev_text', 'entry_image__image').order_by('-id')
 
     def get(self, request, *args, **kwargs):
         # Обработка фильтров для статей
@@ -45,7 +48,7 @@ class BlogsListView(ListView):
         context = super(BlogsListView,self).get_context_data(**kwargs)
         context['tags'] = Tag.objects.all().values_list('id', 'name')
         context['category'] = Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
-        context['recrent_articles'] = Article.objects.filter(created_at__date__lt=datetime.now()).only('title', 'entry_image', 'created_at').order_by('-id')[:5]
+        context['recrent_articles'] = Article.objects.filter(created_at__date__lt=datetime.now()).select_related('entry_image').only('title', 'entry_image__image', 'created_at').order_by('-id')[:5]
         return context
 
 
@@ -53,10 +56,13 @@ class BlogDetailView(DetailView):
     model = Article
     context_object_name = 'article'
     template_name = 'blog/blog_detail.html'
+    
+    def get_queryset(self):
+        return Article.objects.select_related('entry_image','category').only('title','entry_image__image','text','category__id','category__name')
 
     def get_context_data(self,*args, **kwargs):
         context = super(BlogDetailView,self).get_context_data(**kwargs)
         context['tags'] = Tag.objects.all().values_list('id', 'name')
         context['category'] = Category.objects.all().values_list('id', 'name').annotate(article_count=Count('article'))
-        context['recrent_articles'] = Article.objects.filter(created_at__date__lt=datetime.now()).only('title', 'entry_image', 'created_at').order_by('-id')[:5]
+        context['recrent_articles'] = Article.objects.filter(created_at__date__lt=datetime.now()).select_related('entry_image').only('title', 'entry_image__image', 'created_at').order_by('-id')[:5]
         return context

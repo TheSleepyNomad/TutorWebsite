@@ -230,7 +230,7 @@
                     <div class="sidebar-item recent-posts">
                         {% for article in recrent_articles %}
                             <div class="post-item clearfix">
-                                <img src="{{ article.entry_image.url }}" alt="">
+                                <img src="{{ article.entry_image.image.url }}" alt="">
                                 <h4><a href="{% url 'blog:blog_detail' article.pk %}">{{ article.title }}</a></h4>
                                 <time datetime="">{{ article.created_at|date:"M j, Y" }}</time>
                             </div>
