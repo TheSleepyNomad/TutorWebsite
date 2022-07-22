@@ -2,7 +2,6 @@ from tkinter import CASCADE
 from django.db import models
 from users.models import Users
 from ckeditor.fields import RichTextField
-
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='Наименование категории')

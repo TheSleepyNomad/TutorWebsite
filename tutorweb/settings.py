@@ -45,6 +45,8 @@ INSTALLED_APPS = [
 
     "debug_toolbar",
 
+    'taggit',
+
     # my apps
     'landingpage',
     'blog',
